@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // Kalkulasi awal menggunakan rumus yang benar
         moveVelocity = new Vector2(
             2 * maxSpeed.x / timeToFullSpeed.x,
             2 * maxSpeed.y / timeToFullSpeed.y
@@ -37,18 +36,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        // Mendapatkan input horizontal dan vertical
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Update moveDirection berdasarkan input
         moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
 
-        // Mendapatkan current velocity
         Vector2 currentVelocity = rb.velocity;
         Vector2 newVelocity = currentVelocity;
 
-        // Mengatur pergerakan horizontal
         if (horizontalInput != 0)
         {
             newVelocity.x += moveDirection.x * moveVelocity.x * Time.fixedDeltaTime;
@@ -66,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Mengatur pergerakan vertical
         if (verticalInput != 0)
         {
             newVelocity.y += moveDirection.y * moveVelocity.y * Time.fixedDeltaTime;
@@ -84,11 +78,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Membatasi kecepatan maksimum untuk masing-masing axis
         newVelocity.x = Mathf.Clamp(newVelocity.x, -maxSpeed.x, maxSpeed.x);
         newVelocity.y = Mathf.Clamp(newVelocity.y, -maxSpeed.y, maxSpeed.y);
 
-        // Menerapkan velocity baru ke Rigidbody2D
         rb.velocity = newVelocity;
 
         MoveBound();
@@ -96,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 GetFriction()
     {
-        // Mengembalikan friction yang sesuai berdasarkan pergerakan
         return moveDirection != Vector2.zero ? moveFriction : stopFriction;
     }
 
@@ -107,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsMoving()
     {
-        // Mengembalikan true jika kecepatan player melebihi stopClamp pada salah satu axis
         return Mathf.Abs(rb.velocity.x) > stopClamp.x || Mathf.Abs(rb.velocity.y) > stopClamp.y;
     }
 }
