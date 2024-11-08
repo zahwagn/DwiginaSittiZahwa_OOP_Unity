@@ -13,10 +13,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveFriction;
     private Vector2 stopFriction;
     private Rigidbody2D rb;
+    private Camera mainCamera; // Referensi ke main camera
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        mainCamera = Camera.main; // Mendapatkan referensi main camera
 
         moveVelocity = new Vector2(
             2 * maxSpeed.x / timeToFullSpeed.x,
@@ -53,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             Vector2 friction = GetFriction();
             if (Mathf.Abs(currentVelocity.x) > stopClamp.x)
             {
-                newVelocity.x += friction.x * Time.fixedDeltaTime; // Friction sudah negatif
+                newVelocity.x += friction.x * Time.fixedDeltaTime;
             }
             else
             {
@@ -70,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
             Vector2 friction = GetFriction();
             if (Mathf.Abs(currentVelocity.y) > stopClamp.y)
             {
-                newVelocity.y += friction.y * Time.fixedDeltaTime; // Friction sudah negatif
+                newVelocity.y += friction.y * Time.fixedDeltaTime;
             }
             else
             {
@@ -93,7 +95,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveBound()
     {
-        // Untuk sementara dikosongkan sesuai instruksi
+        if (mainCamera != null)
+        {
+            Vector2 screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+            
+            float objectWidth = transform.localScale.x / 2;
+            float objectHeight = transform.localScale.y / 2;
+
+            Vector3 currentPosition = transform.position;
+
+            float newX = Mathf.Clamp(currentPosition.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
+            
+            float newY = Mathf.Clamp(currentPosition.y, -screenBounds.y + objectHeight, screenBounds.y - objectHeight);
+
+            transform.position = new Vector3(newX, newY, currentPosition.z);
+        }
     }
 
     public bool IsMoving()
