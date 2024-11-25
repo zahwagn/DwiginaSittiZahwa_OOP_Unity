@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce63319607f30394db59b4ea4d581de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootIntervalInSeconds: 1
+  shootIntervalInSeconds: 0.5
   bullet: {fileID: 7959805517723857822}
   bulletSpawnPoint: {fileID: 6799052487363654890}
   parentTransform: {fileID: 398852612812928767}
@@ -166,19 +166,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 73707664164201470, guid: e6c11dbfad6bc1a45a0e765039a3f048, type: 3}
       propertyPath: m_Size.x
-      value: 0.17095101
+      value: 0.09462628
       objectReference: {fileID: 0}
     - target: {fileID: 73707664164201470, guid: e6c11dbfad6bc1a45a0e765039a3f048, type: 3}
       propertyPath: m_Size.y
-      value: 0.20208901
+      value: 0.118584484
       objectReference: {fileID: 0}
     - target: {fileID: 73707664164201470, guid: e6c11dbfad6bc1a45a0e765039a3f048, type: 3}
       propertyPath: m_Offset.x
-      value: -0.0019460917
+      value: 0.00092825294
       objectReference: {fileID: 0}
     - target: {fileID: 73707664164201470, guid: e6c11dbfad6bc1a45a0e765039a3f048, type: 3}
       propertyPath: m_Offset.y
-      value: 0.10703686
+      value: 0.095003545
       objectReference: {fileID: 0}
     - target: {fileID: 5020634320264923991, guid: e6c11dbfad6bc1a45a0e765039a3f048, type: 3}
       propertyPath: m_LocalPosition.x

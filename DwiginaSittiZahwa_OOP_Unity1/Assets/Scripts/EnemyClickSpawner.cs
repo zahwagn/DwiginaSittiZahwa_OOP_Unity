@@ -19,14 +19,14 @@ public class EnemyClickSpawner : MonoBehaviour
     }
     if (Input.GetMouseButtonDown(1))
     {
-SpawnEnemy();
-}
-}
-private void SpawnEnemy()
-{
-if (selectedVariant < enemyVariants.Length)
-{
-Instantiate(enemyVariants[selectedVariant]);
-}
-}
-}
+    SpawnEnemy();
+    }
+    }
+    private void SpawnEnemy()
+    {
+    if (selectedVariant < enemyVariants.Length)
+    {
+    Instantiate(enemyVariants[selectedVariant]);
+    }
+    }
+    }
