@@ -3,74 +3,56 @@ using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
-    [Header("UI Text Components")]
-    public Text healthText;
-    public Text pointsText;
-    public Text waveText;
-    public Text enemyCountText;
+  [Header("UI Text Component")]
+  public Text infoText;
 
-    [Header("Game Components")]
-    public HealthComponent playerHealth;
-    public LevelManager levelManager;
+  [Header("Game Components")]
+  public HealthComponent playerHealth;
 
-    [Header("Wave and Enemy Tracking")]
-    public int currentWave = 1;
-    public int enemyCountInWave = 0;
+  [Header("Wave and Enemy Tracking")]
+  public int currentWave = 1;
+  public int enemyCountInWave = 0;
 
-    private int playerPoints = 0;
+  private int playerPoints = 0;
 
-    void Start()
+  void Start()
+  {
+    // Find player health component if not assigned in inspector
+    if (playerHealth == null)
     {
-        // Find player health component if not assigned in inspector
-        if (playerHealth == null)
-            playerHealth = FindObjectOfType<Player>().GetComponent<HealthComponent>();
-
-        UpdateHealthDisplay();
-        UpdatePointsDisplay();
-        UpdateWaveDisplay();
+      playerHealth = FindObjectOfType<Player>().GetComponent<HealthComponent>();
     }
 
-    void Update()
-    {
-        // Continuously update health display in case of changes
-        UpdateHealthDisplay();
-    }
+    UpdateInfoDisplay();
+  }
 
-    public void UpdateHealthDisplay()
-    {
-        if (playerHealth != null)
-        {
-            healthText.text = $"Health: {Mathf.RoundToInt(playerHealth.Health)}/{Mathf.RoundToInt(playerHealth.MaxHealth)}";
-        }
-    }
+  void Update()
+  {
+    // Continuously update health display in case of changes
+    UpdateInfoDisplay();
+  }
 
-    public void AddPointsFromEnemy(Enemy enemy)
-    {
-        // Use reflection to get level from protected field
-        int enemyLevel = (int)enemy.GetType()
-            .GetField("level", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-            .GetValue(enemy);
-        
-        playerPoints += enemyLevel;
-        UpdatePointsDisplay();
-    }
+  public void AddPointsFromEnemy(int enemyLevel)
+  {
+    playerPoints += enemyLevel;
+    UpdateInfoDisplay();
+  }
 
-    public void UpdatePointsDisplay()
-    {
-        pointsText.text = $"Points: {playerPoints}";
-    }
+  public void UpdateWaveInfo(int wave, int enemyCount)
+  {
+    currentWave = wave;
+    enemyCountInWave = enemyCount;
+    UpdateInfoDisplay();
+  }
 
-    public void UpdateWaveDisplay()
+  private void UpdateInfoDisplay()
+  {
+    if (playerHealth != null)
     {
-        waveText.text = $"Wave: {currentWave}";
-        enemyCountText.text = $"Enemies: {enemyCountInWave}";
+      infoText.text = $"<b>Health:</b> {Mathf.RoundToInt(playerHealth.Health)}/{Mathf.RoundToInt(playerHealth.MaxHealth)} | " +
+                       $"<b>Points:</b> {playerPoints} | " +
+                       $"<b>Wave:</b> {currentWave} | " +
+                       $"<b>Enemies Left:</b> {enemyCountInWave}";
     }
-
-    // Method to update wave and enemy count
-    public void UpdateWaveInfo(int wave, int enemyCount)
-    {
-        currentWave = wave;
-        enemyCountInWave = enemyCount;
-        UpdateWaveDisplay();
-    }
+  }
 }

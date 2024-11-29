@@ -4,16 +4,16 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Enemy Prefabs")]
-    public Enemy spawnedEnemy;                                    // Prefab enemy yang akan di-spawn
-    [SerializeField] private int minimumKillsToIncreaseSpawnCount = 6;  // Jumlah kill minimum untuk menaikkan spawn count
-    public int totalKill = 0;                                     // Total kill keseluruhan
+    public Enemy spawnedEnemy;                                    
+    [SerializeField] private int minimumKillsToIncreaseSpawnCount = 6;  
+    public int totalKill = 0;                                     
     private int totalKillWave = 0;                               // Total kill per wave
-    [SerializeField] private float spawnInterval = 3f;           // Interval waktu antar spawn
+    [SerializeField] private float spawnInterval = 3f;           
 
     [Header("Spawned Enemies Counter")]
     public int spawnCount = 2;                                   // Jumlah enemy yang di-spawn per interval
     public int defaultSpawnCount = 1;                            // Jumlah spawn default
-    public int spawnCountMultiplier = 1;                         // Pengali jumlah spawn
+    public int spawnCountMultiplier = 1;                         
     public int multiplierIncreaseCount = 1;                      // Jumlah penambahan spawn count
 
     public CombatManager combatManager;                          // Referensi ke Combat Manager
@@ -87,7 +87,6 @@ public class EnemySpawner : MonoBehaviour
     public void ResetForNewWave()
     {
         totalKillWave = 0;
-        // Optional: Reset atau tingkatkan spawn count untuk wave baru
         spawnCount = defaultSpawnCount * (spawnCountMultiplier + combatManager.waveNumber - 1);
     }
 }
